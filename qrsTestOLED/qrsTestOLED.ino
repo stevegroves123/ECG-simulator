@@ -12,7 +12,7 @@ U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/U8X8_PIN_NONE);
 
 float NSRarray[] = { 511, 511, 511, 561, 581, 581, 561, 511, 511, 511, 511, 511, 481, 441, 421,
                      1011, 1023, 1011, 511, 421, 441, 481, 511, 511, 511, 
-                     511, 511, 521, 541, 561, 571, 581, 581, 571, 541, 511, 511 };
+                     511, 521, 531, 541, 561, 571, 581, 581, 571, 541, 511, 511 };
 
 int NSRarrayMax = sizeof(NSRarray) / sizeof(NSRarray[0]);
 int arrayPos = 0;
@@ -29,7 +29,7 @@ void setup() {
 void loop() {
   for (arrayPos = 0; arrayPos < NSRarrayMax; arrayPos++) {
     analogWrite(DAC_PIN, NSRarray[arrayPos]);
-    int newPixel = map(NSRarray[arrayPos], 0, 1023, 64, 0);
+    int newPixel = map(NSRarray[arrayPos], 0, 1023, 63, 0);
     u8g2.drawLine(arrayPos, oldPixel, arrayPos + 1, newPixel);
     //u8g2.drawPixel(arrayPos, newPixel);
     //need to have a way to draw a line from the old position to the new
