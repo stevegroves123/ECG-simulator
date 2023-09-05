@@ -21,7 +21,7 @@ float NSRarray[] = { 511, 511, 511, 561, 581, 581, 561, 511, 511, 511, 511, 511,
 int NSRarrayMax = sizeof(NSRarray) / sizeof(NSRarray[0]);
 int arrayPos = 0;
 int oldPixel = 32;
-int bpm = 1000; // 1000ms is equal to 1 second
+int bpmMilliSeconds = 1000; // 1000ms is equal to 1 second
 
 void setup() {
   analogWriteResolution(10);  // Set analog out resolution to max, 10-bits = 0 - 1023
@@ -43,7 +43,7 @@ void loop() {
   }
   timer.stop();
   int qrsTime = timer.read();
-  int baselineTime = bpm - qrsTime;
+  int baselineTime = bpmMilliSeconds - qrsTime;
   delay(baselineTime);
   Serial.print("QRS time ms: ");
   Serial.println(qrsTime);
