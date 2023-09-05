@@ -2,4 +2,17 @@ This is the test area for the project.
 
 The initial uploads are test files to see if the ideas work. The output (qrs) is sent via A0 (the DAC) and to test it is recieved at A2.
 
-The array that holds the qrs shape is used to create the OLED waveform, not sure if this is a good idea or not, but trying it for now.
+The array that holds the qrs shape is used to create the OLED waveform, not sure if this is a good idea or not, but trying it for now. This did not work, timing showed the QRS was taking over a 1.2seconds to write to the screen. Rejected this approach.
+
+Wrote the qrs to the screen before any output on the A0 line.
+
+Added "Timer.h" by Stefan Staub, https://github.com/sstaub/Timer to work out how long it takes to write the qrs waveform to A0, then subtract this from a variable that holds the bpm time (in milliseconds) to get the length of the baseline.
+  float bpmMilliSeconds = 750; // 1000ms is equal to 1 second
+  timer.start();
+// write the qrs values to A0 
+  timer.stop();
+  int qrsTime = timer.read();
+  int baselineTime = bpmMilliSeconds - qrsTime;
+  delay(baselineTime);
+
+Used the formulae (bpmMilliSeconds/1000)*60 to work out the beats per minute from the time in milliseconds
